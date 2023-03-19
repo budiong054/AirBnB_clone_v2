@@ -10,13 +10,14 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
-        if cls:
-            filter_objects = {}
-            for key in FileStorage.__objects.keys():
-                if cls.__name__ == key.split('.')[0]:
-                    filter_objects[key] = FileStorage.__objects[key]
-            return filter_objects
-        return FileStorage.__objects
+        one_type_objects = {}
+        if cls is not None:
+            for key, value in self.__objects.items():
+                if key.startswith(str(cls.__name__)):
+                    one_type_objects[key] = value
+        else:
+            one_type_objects = self.__objects
+        return one_type_objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -30,6 +31,15 @@ class FileStorage:
             for key, val in temp.items():
                 temp[key] = val.to_dict()
             json.dump(temp, f)
+
+     def delete(self, obj=None):
+        """Deletes obj from __objects if found"""
+        if obj:
+            #form a key from the obj
+            new_key = "{}.{}".format(type(obj).__name__, obj.id)
+            if new_key in self.__objects:
+                del self.__objects[new_key]
+                self.save()
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -57,10 +67,9 @@ class FileStorage:
 
     def delete(self, obj=None):
         """Deletes obj from __objects if found"""
-        if not obj:
-            return
-        keys = FileStorage.__objects.keys()
-        obj_key = f'{obj.__class__.__name__}' + '.' + obj.id
-        if obj_key in keys:
-            del FileStorage.__objects[obj_key]
-            self.save()
+        if obj:
+            #form a key from the obj
+            new_key = "{}.{}".format(type(obj).__name__, obj.id)
+            if new_key in self.__objects:
+                del self.__objects[new_key]
+                self.save()
