@@ -13,7 +13,7 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=False)
     last_name = Column(String(128), nullable=False)
-    #this was implemented in task 8
+    # this was implemented in task 8
     places = relationship("Place", cascade="delete", backref="user")
-    #for caution
+    # for caution
     reviews = relationship("Review", cascade="delete", backref="user")
