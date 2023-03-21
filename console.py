@@ -346,5 +346,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == "__main__":
-    print(HBNBCommand().precmd("asasd.count()"))
     HBNBCommand().cmdloop()
