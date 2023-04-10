@@ -4,6 +4,7 @@
 """
 from fabric.api import local
 from datetime import datetime
+from os import mkdir
 
 
 date = datetime.now()
@@ -15,10 +16,13 @@ def do_pack():
     """pack all the content of the web_static folder to a tgz file"""
 
     # make sure the folder versions is available
-    local("mkdir -p versions")
+    try:
+        mkdir("versions")
+    except FileExistsError:
+        pass
 
     pack = local(f"tar -cvzf versions/{tgz_file} web_static")
 
     if pack.succeeded:
-        return tgz_file
+        return f"versions/{tgz_file}"
     return None
