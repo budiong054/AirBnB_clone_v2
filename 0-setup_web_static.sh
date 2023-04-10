@@ -13,7 +13,7 @@ sudo mkdir -p $DIR_1
 
 sudo mkdir -p $DIR_2
 
-echo -e $html_content > "$DIR_1"index.html
+echo -e "$html_content" > "$DIR_1"index.html
 
 if [ -L $SYMLINK_FILE ]
 then
@@ -22,7 +22,7 @@ fi
 
 sudo ln -s $DIR_1 $SYMLINK_FILE
 
-sudo chown -R $USER:$GROUP /data/
+sudo chown -R ubuntu:ubuntu /data/
 
 new_config="server_name \_\;\n\tlocation \/hbnb_static \{\n\t\talias \/data\/web\_static\/current\/\;\n\t\}\n"
 
