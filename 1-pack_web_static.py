@@ -13,14 +13,14 @@ tgz_file = f"web_static_{date.year}{date.month}{date.day}{date.hour}"\
 
 
 def do_pack():
-    """pack all the content of the web_static folder to a tgz file"""
-
-    # make sure the folder versions is available
+    """pack all the content of the web_static folder to a tgz file
+    """
     try:
         mkdir("versions")
     except FileExistsError:
         pass
-
+    
+    # Packing web_static to versions/{tgz_file}
     pack = local(f"tar -cvzf versions/{tgz_file} web_static")
 
     if pack.succeeded:

@@ -8,7 +8,8 @@ env.hosts = ['18.233.67.42', '54.237.66.155']
 
 
 def do_deploy(archive_path):
-    """This scripts distributes an archive to your webservers"""
+    """This scripts distributes an archive to your webservers
+    """
     # Executing task 'do_deploy'
     if not path.exists(archive_path):
         return False
