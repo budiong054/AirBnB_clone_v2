@@ -1,7 +1,11 @@
 #!/usr/bin/python3
-"""Distributes an archive to your web servers"""
-from fabric.api import put, run, env
-from os import path
+"""
+Distributes an archive to your web servers
+"""
+
+from datetime import datetime
+from fabric.api import put, run, env, local
+import os
 
 
 env.hosts = ['18.233.67.42', '54.237.66.155']
@@ -32,9 +36,10 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """This scripts distributes an archive to your webservers
     """
-    if not path.exists(archive_path):
+        This scripts distributes an archive to your webservers
+    """
+    if not os.path.exists(archive_path):
         return False
     archive_file = archive_path.split('/')[-1]
     archive = archive_file.split('.')[0]
@@ -52,7 +57,7 @@ def do_deploy(archive_path):
         run(f"ln -s /data/web_static/releases/{archive}/ "
             "/data/web_static/current")
     except Exception:
-        return False
+        pass
     else:
         print("New version deployed!")
         return True
